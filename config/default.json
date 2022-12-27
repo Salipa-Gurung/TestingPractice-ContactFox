@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://tester:tester12345@cluster0.5k5uk.mongodb.net/contactFox_db?retryWrites=true&w=majority",
+    "jwtSecret": "hellohello"
+}

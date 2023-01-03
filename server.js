@@ -2,6 +2,8 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const path = require("path");
+const cors = require("cors");
+const dbPort = require("config").get("backendPORT");
 
 const app = express();
 
@@ -10,6 +12,7 @@ connectDB();
 
 // Express middleware.
 app.use(express.json({ extended: false }));
+app.use(cors());
 
 // Define routes.
 app.use("/api/users", require("./routes/users"));
@@ -27,6 +30,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Server port for the backend.
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || dbPort;
 
 app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));

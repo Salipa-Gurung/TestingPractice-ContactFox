@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import axios from "axios";
 import ContactContext from "./contactContext";
 import contactReducer from "./contactReducer";
 import {
@@ -14,6 +13,7 @@ import {
   CLEAR_FILTER,
   CONTACT_ERROR,
 } from "../types";
+import { APIHelper } from "../../utils/apiHelper";
 
 const ContactState = (props) => {
   const initialState = {
@@ -28,7 +28,8 @@ const ContactState = (props) => {
   // Function to get all contacts for the user.
   const getContacts = async () => {
     try {
-      const res = await axios.get("/api/contacts");
+      const res = await APIHelper("GET", "/api/contacts");
+      // const res = await axios.get("/api/contacts");
 
       dispatch({
         type: GET_CONTACTS,
@@ -51,7 +52,8 @@ const ContactState = (props) => {
     };
 
     try {
-      const res = await axios.post("/api/contacts", contact, config);
+      const res = await APIHelper("POST", "/api/contacts", contact, config);
+      // const res = await axios.post("/api/contacts", contact, config);
 
       dispatch({
         type: ADD_CONTACT,
@@ -68,7 +70,8 @@ const ContactState = (props) => {
   // Function to delete a contact.
   const deleteContact = async (id) => {
     try {
-      await axios.delete(`/api/contacts/${id}`);
+      await APIHelper("DELETE", `/api/contacts/${id}`);
+      // await axios.delete(`/api/contacts/${id}`);
 
       dispatch({
         type: DELETE_CONTACT,
@@ -91,11 +94,17 @@ const ContactState = (props) => {
     };
 
     try {
-      const res = await axios.put(
+      const res = await APIHelper(
+        "PUT",
         `/api/contacts/${contact._id}`,
         contact,
         config
       );
+      // const res = await axios.put(
+      //   `/api/contacts/${contact._id}`,
+      //   contact,
+      //   config
+      // );
 
       dispatch({
         type: UPDATE_CONTACT,
